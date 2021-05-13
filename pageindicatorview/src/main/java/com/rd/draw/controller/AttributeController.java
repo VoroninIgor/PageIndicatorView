@@ -13,7 +13,6 @@ import com.rd.animation.type.AnimationType;
 import com.rd.animation.type.BaseAnimation;
 import com.rd.animation.type.ColorAnimation;
 import com.rd.draw.data.Indicator;
-import com.rd.draw.data.Orientation;
 import com.rd.pageindicatorview.R;
 import com.rd.utils.DensityUtils;
 
@@ -90,15 +89,6 @@ public class AttributeController {
     }
 
     private void initSizeAttribute(@NonNull TypedArray typedArray) {
-        int orientationIndex = typedArray.getInt(R.styleable.PageIndicatorView_piv_orientation, Orientation.HORIZONTAL.ordinal());
-        Orientation orientation;
-
-        if (orientationIndex == 0) {
-            orientation = Orientation.HORIZONTAL;
-        } else {
-            orientation = Orientation.VERTICAL;
-        }
-
         int radius = (int) typedArray.getDimension(R.styleable.PageIndicatorView_piv_radius, DensityUtils.dpToPx(Indicator.DEFAULT_RADIUS_DP));
         if (radius < 0) {
             radius = 0;
@@ -110,7 +100,6 @@ public class AttributeController {
         }
 
         indicator.setRadius(radius);
-        indicator.setOrientation(orientation);
         indicator.setPadding(padding);
     }
 

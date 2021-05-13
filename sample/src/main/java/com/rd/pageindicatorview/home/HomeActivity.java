@@ -95,7 +95,6 @@ public class HomeActivity extends BaseActivity {
         }
 
         pageIndicatorView.setAnimationType(customization.getAnimationType());
-        pageIndicatorView.setOrientation(customization.getOrientation());
         pageIndicatorView.setInteractiveAnimation(customization.isInteractiveAnimation());
         pageIndicatorView.setAutoVisibility(customization.isAutoVisibility());
         pageIndicatorView.setFadeOnIdle(customization.isFadeOnIdle());

@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.rd.draw.data.Indicator;
-import com.rd.draw.data.Orientation;
 
 public class CoordinatesUtils {
 
@@ -16,11 +15,7 @@ public class CoordinatesUtils {
             return 0;
         }
 
-        if (indicator.getOrientation() == Orientation.HORIZONTAL) {
-            return getXCoordinate(indicator, position);
-        } else {
-            return getYCoordinate(indicator, position);
-        }
+        return getXCoordinate(indicator, position);
     }
 
     @SuppressWarnings("UnnecessaryLocalVariable")
@@ -29,13 +24,7 @@ public class CoordinatesUtils {
             return 0;
         }
 
-        int coordinate;
-        if (indicator.getOrientation() == Orientation.HORIZONTAL) {
-            coordinate = getHorizontalCoordinate(indicator, position);
-        } else {
-            coordinate = getVerticalCoordinate(indicator);
-        }
-
+        int coordinate = getHorizontalCoordinate(indicator, position);
         coordinate += indicator.getPaddingLeft();
         return coordinate;
     }
@@ -45,13 +34,7 @@ public class CoordinatesUtils {
             return 0;
         }
 
-        int coordinate;
-        if (indicator.getOrientation() == Orientation.HORIZONTAL) {
-            coordinate = getVerticalCoordinate(indicator);
-        } else {
-            coordinate = getHorizontalCoordinate(indicator, position);
-        }
-
+        int coordinate = getVerticalCoordinate(indicator);
         coordinate += indicator.getPaddingTop();
         return coordinate;
     }
@@ -62,18 +45,7 @@ public class CoordinatesUtils {
             return -1;
         }
 
-        float lengthCoordinate;
-        float heightCoordinate;
-
-        if (indicator.getOrientation() == Orientation.HORIZONTAL) {
-            lengthCoordinate = x;
-            heightCoordinate = y;
-        } else {
-            lengthCoordinate = y;
-            heightCoordinate = x;
-        }
-
-        return getFitPosition(indicator, lengthCoordinate, heightCoordinate);
+        return getFitPosition(indicator, x, y);
     }
 
     private static int getFitPosition(@NonNull Indicator indicator, float lengthCoordinate, float heightCoordinate) {
@@ -82,7 +54,7 @@ public class CoordinatesUtils {
 
         int padding = indicator.getPadding();
 
-        int height = indicator.getOrientation() == Orientation.HORIZONTAL ? indicator.getHeight() : indicator.getWidth();
+        int height = indicator.getHeight();
         int length = 0;
 
         for (int i = 0; i < count; i++) {

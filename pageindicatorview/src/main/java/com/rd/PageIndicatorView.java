@@ -26,7 +26,6 @@ import com.rd.animation.type.BaseAnimation;
 import com.rd.animation.type.ColorAnimation;
 import com.rd.draw.controller.DrawController;
 import com.rd.draw.data.Indicator;
-import com.rd.draw.data.Orientation;
 import com.rd.draw.data.PositionSavedState;
 import com.rd.utils.CoordinatesUtils;
 import com.rd.utils.DensityUtils;
@@ -347,19 +346,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
 
         manager.indicator().setAutoVisibility(autoVisibility);
         updateVisibility();
-    }
-
-    /**
-     * Set orientation for indicator, one of HORIZONTAL or VERTICAL.
-     * Default is HORIZONTAL.
-     *
-     * @param orientation an orientation to display page indicators.
-     */
-    public void setOrientation(@Nullable Orientation orientation) {
-        if (orientation != null) {
-            manager.indicator().setOrientation(orientation);
-            requestLayout();
-        }
     }
 
     public void setIdleDuration(long duration) {

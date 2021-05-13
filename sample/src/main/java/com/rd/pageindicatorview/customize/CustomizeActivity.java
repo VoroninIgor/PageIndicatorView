@@ -52,10 +52,6 @@ public class CustomizeActivity extends BaseActivity implements AdapterView.OnIte
             case R.id.spinnerAnimationType:
                 customization.setAnimationType(CustomizationConverter.getAnimationType(position));
                 break;
-
-            case R.id.spinnerOrientation:
-                customization.setOrientation(CustomizationConverter.getOrientation(position));
-                break;
         }
     }
 
@@ -94,11 +90,6 @@ public class CustomizeActivity extends BaseActivity implements AdapterView.OnIte
         setSpinnerAdapter(spinnerAnimationType, R.array.animation_type);
         spinnerAnimationType.setOnItemSelectedListener(this);
         spinnerAnimationType.setSelection(customization.getAnimationType().ordinal());
-
-        Spinner spinnerOrientation = findViewById(R.id.spinnerOrientation);
-        setSpinnerAdapter(spinnerOrientation, R.array.orientation);
-        spinnerOrientation.setOnItemSelectedListener(this);
-        spinnerOrientation.setSelection(customization.getOrientation().ordinal());
 
         Switch switchInteractiveAnimation = findViewById(R.id.switchInteractiveAnimation);
         switchInteractiveAnimation.setOnCheckedChangeListener(this);

@@ -48,7 +48,6 @@ public class Indicator {
 
     private int viewPagerId = View.NO_ID;
 
-    private Orientation orientation;
     private AnimationType animationType;
 
     public int getHeight() {
@@ -236,18 +235,6 @@ public class Indicator {
     }
 
     @NonNull
-    public Orientation getOrientation() {
-        if (orientation == null) {
-            orientation = Orientation.HORIZONTAL;
-        }
-        return orientation;
-    }
-
-    public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-    }
-
-    @NonNull
     public AnimationType getAnimationType() {
         if (animationType == null) {
             animationType = AnimationType.NONE;
@@ -258,5 +245,4 @@ public class Indicator {
     public void setAnimationType(AnimationType animationType) {
         this.animationType = animationType;
     }
-
 }

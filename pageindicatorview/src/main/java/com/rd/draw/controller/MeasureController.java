@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.rd.draw.data.Indicator;
-import com.rd.draw.data.Orientation;
 
 public class MeasureController {
 
@@ -33,7 +32,6 @@ public class MeasureController {
         int width;
         int height;
 
-        Orientation orientation = indicator.getOrientation();
         if (count != 0) {
             int diameterSum = circleDiameterPx * count;
 
@@ -42,14 +40,8 @@ public class MeasureController {
             int w = diameterSum + paddingSum;
             int h = circleDiameterPx;
 
-            if (orientation == Orientation.HORIZONTAL) {
-                desiredWidth = w;
-                desiredHeight = h;
-
-            } else {
-                desiredWidth = h;
-                desiredHeight = w;
-            }
+            desiredWidth = w;
+            desiredHeight = h;
         }
 
         int horizontalPadding = paddingLeft + paddingRight;

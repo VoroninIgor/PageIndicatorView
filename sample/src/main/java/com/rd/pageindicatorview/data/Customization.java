@@ -4,12 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.rd.animation.type.AnimationType;
-import com.rd.draw.data.Orientation;
 
 public class Customization implements Parcelable {
 
     private AnimationType animationType = AnimationType.NONE;
-    private Orientation orientation = Orientation.HORIZONTAL;
 
     private boolean interactiveAnimation = false;
     private boolean autoVisibility = true;
@@ -21,14 +19,6 @@ public class Customization implements Parcelable {
 
     public void setAnimationType(AnimationType animationType) {
         this.animationType = animationType;
-    }
-
-    public Orientation getOrientation() {
-        return orientation;
-    }
-
-    public void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
     }
 
     public boolean isInteractiveAnimation() {
@@ -65,16 +55,14 @@ public class Customization implements Parcelable {
         if (interactiveAnimation != that.interactiveAnimation) return false;
         if (autoVisibility != that.autoVisibility) return false;
         if (animationType != that.animationType) return false;
-        if (orientation != that.orientation) return false;
         if (fadeOnIdle != that.fadeOnIdle) return false;
 
-        return false;
+        return true;
     }
 
     @Override
     public int hashCode() {
         int result = animationType != null ? animationType.hashCode() : 0;
-        result = 31 * result + (orientation != null ? orientation.hashCode() : 0);
         result = 31 * result + (interactiveAnimation ? 1 : 0);
         result = 31 * result + (autoVisibility ? 1 : 0);
         result = 31 * result + (fadeOnIdle ? 1 : 0);
@@ -89,7 +77,6 @@ public class Customization implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.animationType == null ? -1 : this.animationType.ordinal());
-        dest.writeInt(this.orientation == null ? -1 : this.orientation.ordinal());
         dest.writeByte(this.interactiveAnimation ? (byte) 1 : (byte) 0);
         dest.writeByte(this.autoVisibility ? (byte) 1 : (byte) 0);
         dest.writeByte(this.fadeOnIdle ? (byte) 1 : (byte) 0);
@@ -101,9 +88,6 @@ public class Customization implements Parcelable {
     protected Customization(Parcel in) {
         int tmpAnimationType = in.readInt();
         this.animationType = tmpAnimationType == -1 ? null : AnimationType.values()[tmpAnimationType];
-        int tmpOrientation = in.readInt();
-        this.orientation = tmpOrientation == -1 ? null : Orientation.values()[tmpOrientation];
-        int tmpRtlMode = in.readInt();
         this.interactiveAnimation = in.readByte() != 0;
         this.autoVisibility = in.readByte() != 0;
         this.fadeOnIdle = in.readByte() != 0;
