@@ -18,8 +18,6 @@ import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.text.TextUtilsCompat;
-import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -42,6 +40,13 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     private DataSetObserver setObserver;
     private ViewPager viewPager;
     private boolean isInteractionEnabled;
+    private final Runnable idleRunnable = new Runnable() {
+        @Override
+        public void run() {
+            manager.indicator().setIdle(true);
+            hideWithAnimation();
+        }
+    };
 
     public PageIndicatorView(Context context) {
         super(context);
@@ -171,6 +176,13 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     }
 
     /**
+     * Return number of circle indicators
+     */
+    public int getCount() {
+        return manager.indicator().getCount();
+    }
+
+    /**
      * Set static number of circle indicators to be displayed.
      *
      * @param count total count of indicators.
@@ -181,13 +193,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
             updateVisibility();
             requestLayout();
         }
-    }
-
-    /**
-     * Return number of circle indicators
-     */
-    public int getCount() {
-        return manager.indicator().getCount();
     }
 
     /**
@@ -215,6 +220,14 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         } else {
             stopIdleRunnable();
         }
+    }
+
+    /**
+     * Return radius of each circle indicators in px. If custom radius is not set, return
+     * default value {@link Indicator#DEFAULT_RADIUS_DP}.
+     */
+    public int getRadius() {
+        return manager.indicator().getRadius();
     }
 
     /**
@@ -249,11 +262,11 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     }
 
     /**
-     * Return radius of each circle indicators in px. If custom radius is not set, return
-     * default value {@link Indicator#DEFAULT_RADIUS_DP}.
+     * Return padding in px between each circle indicator. If custom padding is not set,
+     * return default value {@link Indicator#DEFAULT_PADDING_DP}.
      */
-    public int getRadius() {
-        return manager.indicator().getRadius();
+    public int getPadding() {
+        return manager.indicator().getPadding();
     }
 
     /**
@@ -286,13 +299,11 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     }
 
     /**
-     * Return padding in px between each circle indicator. If custom padding is not set,
-     * return default value {@link Indicator#DEFAULT_PADDING_DP}.
+     * Return stroke width in px if {@link AnimationType#FILL} is selected, 0 otherwise.
      */
-    public int getPadding() {
-        return manager.indicator().getPadding();
+    public int getStrokeWidth() {
+        return manager.indicator().getStroke();
     }
-
 
     public void setStrokeWidth(float strokePx) {
         int radiusPx = manager.indicator().getRadius();
@@ -309,10 +320,11 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     }
 
     /**
-     * Return stroke width in px if {@link AnimationType#FILL} is selected, 0 otherwise.
+     * Return color of selected circle indicator. If custom unselected color
+     * is not set, return default color {@link ColorAnimation#DEFAULT_SELECTED_COLOR}.
      */
-    public int getStrokeWidth() {
-        return manager.indicator().getStroke();
+    public int getSelectedColor() {
+        return manager.indicator().getSelectedColor();
     }
 
     /**
@@ -326,11 +338,11 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     }
 
     /**
-     * Return color of selected circle indicator. If custom unselected color
-     * is not set, return default color {@link ColorAnimation#DEFAULT_SELECTED_COLOR}.
+     * Return color of unselected state of each circle indicator. If custom unselected color
+     * is not set, return default color {@link ColorAnimation#DEFAULT_UNSELECTED_COLOR}.
      */
-    public int getSelectedColor() {
-        return manager.indicator().getSelectedColor();
+    public int getUnselectedColor() {
+        return manager.indicator().getUnselectedColor();
     }
 
     /**
@@ -341,14 +353,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     public void setUnselectedColor(int color) {
         manager.indicator().setUnselectedColor(color);
         invalidate();
-    }
-
-    /**
-     * Return color of unselected state of each circle indicator. If custom unselected color
-     * is not set, return default color {@link ColorAnimation#DEFAULT_UNSELECTED_COLOR}.
-     */
-    public int getUnselectedColor() {
-        return manager.indicator().getUnselectedColor();
     }
 
     /**
@@ -379,17 +383,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         }
     }
 
-    /**
-     * Set animation duration time in millisecond. Default animation duration time is {@link BaseAnimation#DEFAULT_ANIMATION_TIME}.
-     * (Won't affect on anything unless {@link #setAnimationType(AnimationType type)} is specified
-     * and {@link #setInteractiveAnimation(boolean isInteractive)} is false).
-     *
-     * @param duration animation duration time.
-     */
-    public void setAnimationDuration(long duration) {
-        manager.indicator().setAnimationDuration(duration);
-    }
-
     public void setIdleDuration(long duration) {
         manager.indicator().setIdleDuration(duration);
         if (manager.indicator().isFadeOnIdle()) {
@@ -405,6 +398,17 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
      */
     public long getAnimationDuration() {
         return manager.indicator().getAnimationDuration();
+    }
+
+    /**
+     * Set animation duration time in millisecond. Default animation duration time is {@link BaseAnimation#DEFAULT_ANIMATION_TIME}.
+     * (Won't affect on anything unless {@link #setAnimationType(AnimationType type)} is specified
+     * and {@link #setInteractiveAnimation(boolean isInteractive)} is false).
+     *
+     * @param duration animation duration time.
+     */
+    public void setAnimationDuration(long duration) {
+        manager.indicator().setAnimationDuration(duration);
     }
 
     /**
@@ -755,12 +759,4 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         HANDLER.removeCallbacks(idleRunnable);
         displayWithAnimation();
     }
-
-    private Runnable idleRunnable = new Runnable() {
-        @Override
-        public void run() {
-            manager.indicator().setIdle(true);
-            hideWithAnimation();
-        }
-    };
 }

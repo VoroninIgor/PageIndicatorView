@@ -2,8 +2,10 @@ package com.rd.animation.type;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.rd.animation.controller.ValueController;
 
 public abstract class BaseAnimation<T extends Animator> {

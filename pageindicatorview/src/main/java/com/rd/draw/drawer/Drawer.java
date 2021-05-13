@@ -22,7 +22,7 @@ public class Drawer {
     private int coordinateX;
     private int coordinateY;
 
-    private Context context;
+    private final Context context;
 
     public Drawer(Context context, @NonNull Indicator indicator) {
         this.context = context;

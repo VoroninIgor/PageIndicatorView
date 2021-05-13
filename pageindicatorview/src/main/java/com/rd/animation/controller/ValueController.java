@@ -2,19 +2,17 @@ package com.rd.animation.controller;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.rd.animation.data.Value;
-import com.rd.animation.type.*;
+import com.rd.animation.type.ColorAnimation;
+import com.rd.animation.type.SwapAnimation;
 
 public class ValueController {
 
     private ColorAnimation colorAnimation;
     private SwapAnimation swapAnimation;
 
-    private UpdateListener updateListener;
-
-    public interface UpdateListener {
-        void onValueUpdated(@Nullable Value value);
-    }
+    private final UpdateListener updateListener;
 
     public ValueController(@Nullable UpdateListener listener) {
         updateListener = listener;
@@ -36,5 +34,9 @@ public class ValueController {
         }
 
         return swapAnimation;
+    }
+
+    public interface UpdateListener {
+        void onValueUpdated(@Nullable Value value);
     }
 }

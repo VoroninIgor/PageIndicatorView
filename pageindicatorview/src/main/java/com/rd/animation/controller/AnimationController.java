@@ -1,19 +1,19 @@
 package com.rd.animation.controller;
 
 import androidx.annotation.NonNull;
+
 import com.rd.animation.type.AnimationType;
 import com.rd.animation.type.BaseAnimation;
 import com.rd.draw.data.Indicator;
-import com.rd.draw.data.Orientation;
 import com.rd.utils.CoordinatesUtils;
 
 public class AnimationController {
 
-    private ValueController valueController;
-    private ValueController.UpdateListener listener;
+    private final ValueController valueController;
+    private final ValueController.UpdateListener listener;
 
     private BaseAnimation runningAnimation;
-    private Indicator indicator;
+    private final Indicator indicator;
 
     private float progress;
     private boolean isInteractive;

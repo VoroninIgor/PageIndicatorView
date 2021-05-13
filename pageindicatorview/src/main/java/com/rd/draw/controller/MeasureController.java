@@ -1,9 +1,10 @@
 package com.rd.draw.controller;
 
-import androidx.annotation.NonNull;
 import android.util.Pair;
 import android.view.View;
-import com.rd.animation.type.AnimationType;
+
+import androidx.annotation.NonNull;
+
 import com.rd.draw.data.Indicator;
 import com.rd.draw.data.Orientation;
 

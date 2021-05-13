@@ -3,10 +3,11 @@ package com.rd.draw.controller;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.rd.animation.type.AnimationType;
 import com.rd.animation.type.BaseAnimation;
@@ -18,9 +19,8 @@ import com.rd.utils.DensityUtils;
 
 public class AttributeController {
 
-    private Indicator indicator;
-
     private static final int DEFAULT_IDLE_DURATION = 3000;
+    private final Indicator indicator;
 
     public AttributeController(@NonNull Indicator indicator) {
         this.indicator = indicator;

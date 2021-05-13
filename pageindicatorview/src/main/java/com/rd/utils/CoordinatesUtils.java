@@ -142,7 +142,7 @@ public class CoordinatesUtils {
         boolean isLeftOverScrolled;
 
 
-            isLeftOverScrolled = position + 1 < selectedPosition;
+        isLeftOverScrolled = position + 1 < selectedPosition;
 
 
         if (isRightOverScrolled || isLeftOverScrolled) {
@@ -155,7 +155,7 @@ public class CoordinatesUtils {
         float selectingProgress;
 
         if (slideToRightSide) {
-            selectingPosition =  position + 1;
+            selectingPosition = position + 1;
             selectingProgress = positionOffset;
 
         } else {

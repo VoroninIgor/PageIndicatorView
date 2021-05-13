@@ -3,9 +3,11 @@ package com.rd.animation.type;
 import android.animation.ArgbEvaluator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.view.animation.AccelerateDecelerateInterpolator;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.view.animation.AccelerateDecelerateInterpolator;
+
 import com.rd.animation.controller.ValueController;
 import com.rd.animation.data.type.ColorAnimationValue;
 
@@ -16,11 +18,9 @@ public class ColorAnimation extends BaseAnimation<ValueAnimator> {
 
     static final String ANIMATION_COLOR_REVERSE = "ANIMATION_COLOR_REVERSE";
     static final String ANIMATION_COLOR = "ANIMATION_COLOR";
-
-    private ColorAnimationValue value;
-
     int colorStart;
     int colorEnd;
+    private final ColorAnimationValue value;
 
     public ColorAnimation(@Nullable ValueController.UpdateListener listener) {
         super(listener);

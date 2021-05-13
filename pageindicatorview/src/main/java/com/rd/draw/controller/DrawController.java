@@ -15,14 +15,9 @@ import com.rd.utils.CoordinatesUtils;
 public class DrawController {
 
     private Value value;
-    private Drawer drawer;
-    private Indicator indicator;
+    private final Drawer drawer;
+    private final Indicator indicator;
     private ClickListener listener;
-
-    public interface ClickListener {
-
-        void onIndicatorClicked(int position);
-    }
 
     public DrawController(Context context, @NonNull Indicator indicator) {
         this.indicator = indicator;
@@ -94,5 +89,10 @@ public class DrawController {
 
     private void drawWithAnimation(@NonNull Canvas canvas) {
         drawer.drawSwap(canvas, value);
+    }
+
+    public interface ClickListener {
+
+        void onIndicatorClicked(int position);
     }
 }

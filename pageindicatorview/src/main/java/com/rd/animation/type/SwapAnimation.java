@@ -3,8 +3,10 @@ package com.rd.animation.type;
 import android.animation.IntEvaluator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
-import androidx.annotation.NonNull;
 import android.view.animation.AccelerateDecelerateInterpolator;
+
+import androidx.annotation.NonNull;
+
 import com.rd.animation.controller.ValueController;
 import com.rd.animation.data.type.SwapAnimationValue;
 
@@ -17,7 +19,7 @@ public class SwapAnimation extends BaseAnimation<ValueAnimator> {
     private int coordinateStart = COORDINATE_NONE;
     private int coordinateEnd = COORDINATE_NONE;
 
-    private SwapAnimationValue value;
+    private final SwapAnimationValue value;
 
     public SwapAnimation(@NonNull ValueController.UpdateListener listener) {
         super(listener);

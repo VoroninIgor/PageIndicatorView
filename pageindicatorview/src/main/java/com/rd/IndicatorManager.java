@@ -3,6 +3,7 @@ package com.rd;
 import android.content.Context;
 
 import androidx.annotation.Nullable;
+
 import com.rd.animation.AnimationManager;
 import com.rd.animation.controller.ValueController;
 import com.rd.animation.data.Value;
@@ -11,15 +12,11 @@ import com.rd.draw.data.Indicator;
 
 public class IndicatorManager implements ValueController.UpdateListener {
 
-    private DrawManager drawManager;
-    private AnimationManager animationManager;
-    private Listener listener;
+    private final DrawManager drawManager;
+    private final AnimationManager animationManager;
+    private final Listener listener;
 
-    interface Listener {
-        void onIndicatorUpdated();
-    }
-
-    IndicatorManager(Context context,@Nullable Listener listener) {
+    IndicatorManager(Context context, @Nullable Listener listener) {
         this.listener = listener;
         this.drawManager = new DrawManager(context);
         this.animationManager = new AnimationManager(drawManager.indicator(), this);
@@ -43,5 +40,9 @@ public class IndicatorManager implements ValueController.UpdateListener {
         if (listener != null) {
             listener.onIndicatorUpdated();
         }
+    }
+
+    interface Listener {
+        void onIndicatorUpdated();
     }
 }

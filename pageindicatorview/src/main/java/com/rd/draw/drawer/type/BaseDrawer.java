@@ -1,7 +1,9 @@
 package com.rd.draw.drawer.type;
 
 import android.graphics.Paint;
+
 import androidx.annotation.NonNull;
+
 import com.rd.draw.data.Indicator;
 
 class BaseDrawer {

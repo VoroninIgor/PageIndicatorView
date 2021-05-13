@@ -9,7 +9,7 @@ public class IdUtils {
 
     private static final AtomicInteger nextGeneratedId = new AtomicInteger(1);
 
-    public static int generateViewId(){
+    public static int generateViewId() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             return generateId();
         } else {
