@@ -20,9 +20,9 @@ public class DrawManager {
 	private MeasureController measureController;
 	private AttributeController attributeController;
 
-	public DrawManager() {
+	public DrawManager(Context context) {
 		this.indicator = new Indicator();
-		this.drawController = new DrawController(indicator);
+		this.drawController = new DrawController(context, indicator);
 		this.measureController = new MeasureController();
 		this.attributeController = new AttributeController(indicator);
 	}

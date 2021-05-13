@@ -81,29 +81,6 @@
                 android:layout_height="1dp"
                 android:background="@color/gray_200" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:text="@string/right_to_left_mode"
-                    android:textColor="@color/gray_700"
-                    android:textSize="16sp" />
-
-                <Spinner
-                    android:id="@+id/spinnerRtl"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:dropDownWidth="150dp" />
-            </LinearLayout>
-
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

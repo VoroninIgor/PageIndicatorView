@@ -1,63 +1,65 @@
 package com.rd.draw.controller;
 
+import android.content.Context;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.view.MotionEvent;
+
 import com.rd.animation.data.Value;
-import com.rd.animation.type.AnimationType;
 import com.rd.draw.data.Indicator;
 import com.rd.draw.drawer.Drawer;
 import com.rd.utils.CoordinatesUtils;
 
 public class DrawController {
 
-	private Value value;
-	private Drawer drawer;
-	private Indicator indicator;
-	private ClickListener listener;
+    private Value value;
+    private Drawer drawer;
+    private Indicator indicator;
+    private ClickListener listener;
 
-	public interface ClickListener {
+    public interface ClickListener {
 
-		void onIndicatorClicked(int position);
-	}
+        void onIndicatorClicked(int position);
+    }
 
-	public DrawController(@NonNull Indicator indicator) {
-		this.indicator = indicator;
-		this.drawer = new Drawer(indicator);
-	}
+    public DrawController(Context context, @NonNull Indicator indicator) {
+        this.indicator = indicator;
+        this.drawer = new Drawer(context, indicator);
+    }
 
-	public void updateValue(@Nullable Value value) {
+    public void updateValue(@Nullable Value value) {
         this.value = value;
     }
 
-	public void setClickListener(@Nullable ClickListener listener) {
-		this.listener = listener;
-	}
+    public void setClickListener(@Nullable ClickListener listener) {
+        this.listener = listener;
+    }
 
-	public void touch(@Nullable MotionEvent event) {
-		if (event == null) {
-			return;
-		}
+    public void touch(@Nullable MotionEvent event) {
+        if (event == null) {
+            return;
+        }
 
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_UP:
-				onIndicatorTouched(event.getX(), event.getY());
-				break;
-			default:
-		}
-	}
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_UP:
+                onIndicatorTouched(event.getX(), event.getY());
+                break;
+            default:
+        }
+    }
 
-	private void onIndicatorTouched(float x, float y) {
-		if (listener != null) {
-			int position = CoordinatesUtils.getPosition(indicator, x, y);
-			if (position >= 0) {
-				listener.onIndicatorClicked(position);
-			}
-		}
-	}
+    private void onIndicatorTouched(float x, float y) {
+        if (listener != null) {
+            int position = CoordinatesUtils.getPosition(indicator, x, y);
+            if (position >= 0) {
+                listener.onIndicatorClicked(position);
+            }
+        }
+    }
 
-	public void draw(@NonNull Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         int count = indicator.getCount();
 
         for (int position = 0; position < count; position++) {
@@ -86,52 +88,11 @@ public class DrawController {
         if (value != null && isSelectedItem) {
             drawWithAnimation(canvas);
         } else {
-            drawer.drawBasic(canvas, isSelectedItem);
+            drawer.drawBasic(canvas);
         }
     }
 
     private void drawWithAnimation(@NonNull Canvas canvas) {
-        AnimationType animationType = indicator.getAnimationType();
-        switch (animationType) {
-            case NONE:
-                drawer.drawBasic(canvas, true);
-                break;
-
-            case COLOR:
-                drawer.drawColor(canvas, value);
-                break;
-
-            case SCALE:
-                drawer.drawScale(canvas, value);
-                break;
-
-            case WORM:
-                drawer.drawWorm(canvas, value);
-                break;
-
-            case SLIDE:
-                drawer.drawSlide(canvas, value);
-                break;
-
-            case FILL:
-                drawer.drawFill(canvas, value);
-                break;
-
-            case THIN_WORM:
-                drawer.drawThinWorm(canvas, value);
-                break;
-
-            case DROP:
-                drawer.drawDrop(canvas, value);
-                break;
-
-            case SWAP:
-                drawer.drawSwap(canvas, value);
-                break;
-
-            case SCALE_DOWN:
-                drawer.drawScaleDown(canvas, value);
-                break;
-        }
+        drawer.drawSwap(canvas, value);
     }
 }

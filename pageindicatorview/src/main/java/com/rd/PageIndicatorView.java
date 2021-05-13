@@ -9,24 +9,27 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.text.TextUtilsCompat;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.core.view.ViewCompat;
-import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import com.rd.animation.type.*;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.text.TextUtilsCompat;
+import androidx.core.view.ViewCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.rd.animation.type.AnimationType;
+import com.rd.animation.type.BaseAnimation;
+import com.rd.animation.type.ColorAnimation;
 import com.rd.draw.controller.DrawController;
 import com.rd.draw.data.Indicator;
 import com.rd.draw.data.Orientation;
 import com.rd.draw.data.PositionSavedState;
-import com.rd.draw.data.RtlMode;
 import com.rd.utils.CoordinatesUtils;
 import com.rd.utils.DensityUtils;
 import com.rd.utils.IdUtils;
@@ -205,14 +208,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         }
     }
 
-    /**
-     * Fade on idle will make {@link PageIndicatorView} {@link View#INVISIBLE} if {@link ViewPager} is not interacted
-     * in time equal to {@link Indicator#idleDuration}. Take care when setting {@link PageIndicatorView} alpha
-     * manually if this is true. Alpha is used to manage fading and appearance of {@link PageIndicatorView} and value you provide
-     * will be overridden when {@link PageIndicatorView} enters or leaves idle state.
-     *
-     * @param fadeOnIdle boolean value to hide {@link PageIndicatorView} when {@link ViewPager} is idle
-     */
     public void setFadeOnIdle(boolean fadeOnIdle) {
         manager.indicator().setFadeOnIdle(fadeOnIdle);
         if (fadeOnIdle) {
@@ -298,43 +293,7 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         return manager.indicator().getPadding();
     }
 
-    /**
-     * Set scale factor used in {@link AnimationType#SCALE} animation.
-     * Defines size of unselected indicator circles in comparing to selected one.
-     * Minimum and maximum values are {@link ScaleAnimation#MAX_SCALE_FACTOR} and {@link ScaleAnimation#MIN_SCALE_FACTOR}.
-     * See also {@link ScaleAnimation#DEFAULT_SCALE_FACTOR}.
-     *
-     * @param factor float value in range between 0 and 1.
-     */
-    public void setScaleFactor(float factor) {
-        if (factor > ScaleAnimation.MAX_SCALE_FACTOR) {
-            factor = ScaleAnimation.MAX_SCALE_FACTOR;
 
-        } else if (factor < ScaleAnimation.MIN_SCALE_FACTOR) {
-            factor = ScaleAnimation.MIN_SCALE_FACTOR;
-        }
-
-        manager.indicator().setScaleFactor(factor);
-    }
-
-    /**
-     * Returns scale factor values used in {@link AnimationType#SCALE} animation.
-     * Defines size of unselected indicator circles in comparing to selected one.
-     * Minimum and maximum values are {@link ScaleAnimation#MAX_SCALE_FACTOR} and {@link ScaleAnimation#MIN_SCALE_FACTOR}.
-     * See also {@link ScaleAnimation#DEFAULT_SCALE_FACTOR}.
-     *
-     * @return float value that indicate scale factor.
-     */
-    public float getScaleFactor() {
-        return manager.indicator().getScaleFactor();
-    }
-
-    /**
-     * Set stroke width in px to set while {@link AnimationType#FILL} is selected.
-     * Default value is {@link FillAnimation#DEFAULT_STROKE_DP}
-     *
-     * @param strokePx stroke width in px.
-     */
     public void setStrokeWidth(float strokePx) {
         int radiusPx = manager.indicator().getRadius();
 
@@ -346,28 +305,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         }
 
         manager.indicator().setStroke((int) strokePx);
-        invalidate();
-    }
-
-    /**
-     * Set stroke width in dp to set while {@link AnimationType#FILL} is selected.
-     * Default value is {@link FillAnimation#DEFAULT_STROKE_DP}
-     *
-     * @param strokeDp stroke width in dp.
-     */
-
-    public void setStrokeWidth(int strokeDp) {
-        int strokePx = DensityUtils.dpToPx(strokeDp);
-        int radiusPx = manager.indicator().getRadius();
-
-        if (strokePx < 0) {
-            strokePx = 0;
-
-        } else if (strokePx > radiusPx) {
-            strokePx = radiusPx;
-        }
-
-        manager.indicator().setStroke(strokePx);
         invalidate();
     }
 
@@ -453,13 +390,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         manager.indicator().setAnimationDuration(duration);
     }
 
-    /**
-     * Sets time in millis after which {@link ViewPager} is considered idle.
-     * If {@link Indicator#fadeOnIdle} is true, {@link PageIndicatorView} will
-     * fade away after entering idle state and appear when it is left.
-     *
-     * @param duration time in millis after which {@link ViewPager} is considered idle
-     */
     public void setIdleDuration(long duration) {
         manager.indicator().setIdleDuration(duration);
         if (manager.indicator().isFadeOnIdle()) {
@@ -538,42 +468,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
             viewPager.removeOnAdapterChangeListener(this);
             viewPager = null;
         }
-    }
-
-    /**
-     * Specify to display PageIndicatorView with Right to left layout or not.
-     * One of {@link RtlMode}: Off (Left to right), On (Right to left)
-     * or Auto (handle this mode automatically based on users language preferences).
-     * Default is Off.
-     *
-     * @param mode instance of {@link RtlMode}
-     */
-    public void setRtlMode(@Nullable RtlMode mode) {
-        Indicator indicator = manager.indicator();
-        if (mode == null) {
-            indicator.setRtlMode(RtlMode.Off);
-        } else {
-            indicator.setRtlMode(mode);
-        }
-
-        if (viewPager == null) {
-            return;
-        }
-
-        int selectedPosition = indicator.getSelectedPosition();
-        int position = selectedPosition;
-
-        if (isRtl()) {
-            position = (indicator.getCount() - 1) - selectedPosition;
-
-        } else if (viewPager != null) {
-            position = viewPager.getCurrentItem();
-        }
-
-        indicator.setLastSelectedPosition(position);
-        indicator.setSelectingPosition(position);
-        indicator.setSelectedPosition(position);
-        invalidate();
     }
 
     /**
@@ -688,7 +582,7 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     }
 
     private void initIndicatorManager(@Nullable AttributeSet attrs) {
-        manager = new IndicatorManager(this);
+        manager = new IndicatorManager(getContext(), this);
         manager.drawer().initAttributes(getContext(), attrs);
 
         Indicator indicator = manager.indicator();
@@ -737,7 +631,7 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         }
 
         int count = viewPager.getAdapter().getCount();
-        int selectedPos = isRtl() ? (count - 1) - viewPager.getCurrentItem() : viewPager.getCurrentItem();
+        int selectedPos = viewPager.getCurrentItem();
 
         manager.indicator().setSelectedPosition(selectedPos);
         manager.indicator().setSelectingPosition(selectedPos);
@@ -768,13 +662,8 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     private void onPageSelect(int position) {
         Indicator indicator = manager.indicator();
         boolean canSelectIndicator = isViewMeasured();
-        int count = indicator.getCount();
 
         if (canSelectIndicator) {
-            if (isRtl()) {
-                position = (count - 1) - position;
-            }
-
             setSelection(position);
         }
     }
@@ -789,25 +678,10 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
             return;
         }
 
-        Pair<Integer, Float> progressPair = CoordinatesUtils.getProgress(indicator, position, positionOffset, isRtl());
+        Pair<Integer, Float> progressPair = CoordinatesUtils.getProgress(indicator, position, positionOffset);
         int selectingPosition = progressPair.first;
         float selectingProgress = progressPair.second;
         setProgress(selectingPosition, selectingProgress);
-    }
-
-    private boolean isRtl() {
-        switch (manager.indicator().getRtlMode()) {
-            case On:
-                return true;
-
-            case Off:
-                return false;
-
-            case Auto:
-                return TextUtilsCompat.getLayoutDirectionFromLocale(getContext().getResources().getConfiguration().locale) == ViewCompat.LAYOUT_DIRECTION_RTL;
-        }
-
-        return false;
     }
 
     private boolean isViewMeasured() {

@@ -11,11 +11,8 @@ import android.view.View;
 import com.rd.animation.type.AnimationType;
 import com.rd.animation.type.BaseAnimation;
 import com.rd.animation.type.ColorAnimation;
-import com.rd.animation.type.FillAnimation;
-import com.rd.animation.type.ScaleAnimation;
 import com.rd.draw.data.Indicator;
 import com.rd.draw.data.Orientation;
-import com.rd.draw.data.RtlMode;
 import com.rd.pageindicatorview.R;
 import com.rd.utils.DensityUtils;
 
@@ -83,16 +80,12 @@ public class AttributeController {
         int animIndex = typedArray.getInt(R.styleable.PageIndicatorView_piv_animationType, AnimationType.NONE.ordinal());
         AnimationType animationType = getAnimationType(animIndex);
 
-        int rtlIndex = typedArray.getInt(R.styleable.PageIndicatorView_piv_rtl_mode, RtlMode.Off.ordinal());
-        RtlMode rtlMode = getRtlMode(rtlIndex);
-
         boolean fadeOnIdle = typedArray.getBoolean(R.styleable.PageIndicatorView_piv_fadeOnIdle, false);
         long idleDuration = (long) typedArray.getInt(R.styleable.PageIndicatorView_piv_idleDuration, DEFAULT_IDLE_DURATION);
 
         indicator.setAnimationDuration(animationDuration);
         indicator.setInteractiveAnimation(interactiveAnimation);
         indicator.setAnimationType(animationType);
-        indicator.setRtlMode(rtlMode);
         indicator.setFadeOnIdle(fadeOnIdle);
         indicator.setIdleDuration(idleDuration);
     }
@@ -117,28 +110,9 @@ public class AttributeController {
             padding = 0;
         }
 
-        float scaleFactor = typedArray.getFloat(R.styleable.PageIndicatorView_piv_scaleFactor, ScaleAnimation.DEFAULT_SCALE_FACTOR);
-        if (scaleFactor < ScaleAnimation.MIN_SCALE_FACTOR) {
-            scaleFactor = ScaleAnimation.MIN_SCALE_FACTOR;
-
-        } else if (scaleFactor > ScaleAnimation.MAX_SCALE_FACTOR) {
-            scaleFactor = ScaleAnimation.MAX_SCALE_FACTOR;
-        }
-
-        int stroke = (int) typedArray.getDimension(R.styleable.PageIndicatorView_piv_strokeWidth, DensityUtils.dpToPx(FillAnimation.DEFAULT_STROKE_DP));
-        if (stroke > radius) {
-            stroke = radius;
-        }
-
-        if (indicator.getAnimationType() != AnimationType.FILL) {
-            stroke = 0;
-        }
-
         indicator.setRadius(radius);
         indicator.setOrientation(orientation);
         indicator.setPadding(padding);
-        indicator.setScaleFactor(scaleFactor);
-        indicator.setStroke(stroke);
     }
 
     private AnimationType getAnimationType(int index) {
@@ -149,35 +123,10 @@ public class AttributeController {
                 return AnimationType.COLOR;
             case 2:
                 return AnimationType.SCALE;
-            case 3:
-                return AnimationType.WORM;
-            case 4:
-                return AnimationType.SLIDE;
-            case 5:
-                return AnimationType.FILL;
-            case 6:
-                return AnimationType.THIN_WORM;
-            case 7:
-                return AnimationType.DROP;
             case 8:
                 return AnimationType.SWAP;
-            case 9:
-                return AnimationType.SCALE_DOWN;
         }
 
         return AnimationType.NONE;
-    }
-
-    private RtlMode getRtlMode(int index) {
-        switch (index) {
-            case 0:
-                return RtlMode.On;
-            case 1:
-                return RtlMode.Off;
-            case 2:
-                return RtlMode.Auto;
-        }
-
-        return RtlMode.Auto;
     }
 }

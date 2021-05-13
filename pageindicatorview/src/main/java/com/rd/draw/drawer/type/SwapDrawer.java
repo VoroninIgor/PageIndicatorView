@@ -1,17 +1,25 @@
 package com.rd.draw.drawer.type;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
 import com.rd.animation.data.Value;
 import com.rd.animation.data.type.SwapAnimationValue;
 import com.rd.draw.data.Indicator;
-import com.rd.draw.data.Orientation;
+import com.rd.pageindicatorview.R;
 
 public class SwapDrawer extends BaseDrawer {
 
-    public SwapDrawer(@NonNull Paint paint, @NonNull Indicator indicator) {
+    private final Context context;
+
+    public SwapDrawer(Context context, @NonNull Paint paint, @NonNull Indicator indicator) {
         super(paint, indicator);
+        this.context = context;
     }
 
     public void draw(
@@ -26,43 +34,52 @@ public class SwapDrawer extends BaseDrawer {
         }
 
         SwapAnimationValue v = (SwapAnimationValue) value;
-        int selectedColor = indicator.getSelectedColor();
-        int unselectedColor = indicator.getUnselectedColor();
-        int radius = indicator.getRadius();
 
         int selectedPosition = indicator.getSelectedPosition();
         int selectingPosition = indicator.getSelectingPosition();
         int lastSelectedPosition = indicator.getLastSelectedPosition();
 
         int coordinate = v.getCoordinate();
-        int color = unselectedColor;
 
         if (indicator.isInteractiveAnimation()) {
             if (position == selectingPosition) {
                 coordinate = v.getCoordinate();
-                color = selectedColor;
-
             } else if (position == selectedPosition) {
                 coordinate = v.getCoordinateReverse();
-                color = unselectedColor;
             }
 
         } else {
             if (position == lastSelectedPosition) {
                 coordinate = v.getCoordinate();
-                color = selectedColor;
-
             } else if (position == selectedPosition) {
                 coordinate = v.getCoordinateReverse();
-                color = unselectedColor;
             }
         }
 
-        paint.setColor(color);
-        if (indicator.getOrientation() == Orientation.HORIZONTAL) {
-            canvas.drawCircle(coordinate, coordinateY, radius, paint);
-        } else {
-            canvas.drawCircle(coordinateX, coordinate, radius, paint);
+//        paint.setColor(color);
+//        if (indicator.getOrientation() == Orientation.HORIZONTAL) {
+//            canvas.drawCircle(coordinate, coordinateY, radius, paint);
+//        } else {
+//            canvas.drawCircle(coordinateX, coordinate, radius, paint);
+//        }
+
+
+        boolean isPositionSelected = position == lastSelectedPosition;
+
+        Drawable drawable = ContextCompat.getDrawable(
+                context,
+                isPositionSelected ? R.drawable.ic_selected : R.drawable.ic_unselected
+        );
+
+        if (drawable != null) {
+            drawable.setBounds(
+                    coordinate,
+                    coordinateY,
+                    coordinate + drawable.getIntrinsicWidth(),
+                    coordinateY + drawable.getIntrinsicHeight()
+            );
+            drawable.draw(canvas);
         }
+
     }
 }

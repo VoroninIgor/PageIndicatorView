@@ -52,25 +52,11 @@ public class MeasureController {
             }
         }
 
-        if (indicator.getAnimationType() == AnimationType.DROP) {
-            if (orientation == Orientation.HORIZONTAL) {
-                desiredHeight *= 2;
-            } else {
-                desiredWidth *= 2;
-            }
-        }
-
         int horizontalPadding = paddingLeft + paddingRight;
         int verticalPadding = paddingTop + paddingBottom;
 
-        if (orientation == Orientation.HORIZONTAL) {
-            desiredWidth += horizontalPadding;
-            desiredHeight += verticalPadding;
-
-        } else {
-            desiredWidth += horizontalPadding;
-            desiredHeight += verticalPadding;
-        }
+        desiredWidth += horizontalPadding;
+        desiredHeight += verticalPadding;
 
         if (widthMode == View.MeasureSpec.EXACTLY) {
             width = widthSize;

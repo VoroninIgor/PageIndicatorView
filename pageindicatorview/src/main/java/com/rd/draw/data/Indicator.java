@@ -49,7 +49,6 @@ public class Indicator {
 
     private Orientation orientation;
     private AnimationType animationType;
-    private RtlMode rtlMode;
 
     public int getHeight() {
         return height;
@@ -267,15 +266,4 @@ public class Indicator {
         this.animationType = animationType;
     }
 
-    @NonNull
-    public RtlMode getRtlMode() {
-        if (rtlMode == null) {
-            rtlMode = RtlMode.Off;
-        }
-        return rtlMode;
-    }
-
-    public void setRtlMode(RtlMode rtlMode) {
-        this.rtlMode = rtlMode;
-    }
 }

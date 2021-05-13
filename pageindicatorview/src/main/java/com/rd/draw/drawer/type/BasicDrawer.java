@@ -1,61 +1,50 @@
 package com.rd.draw.drawer.type;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
 import com.rd.animation.type.AnimationType;
 import com.rd.draw.data.Indicator;
+import com.rd.pageindicatorview.R;
 
 public class BasicDrawer extends BaseDrawer {
 
-    private Paint strokePaint;
-
-    public BasicDrawer(@NonNull Paint paint, @NonNull Indicator indicator) {
+    public BasicDrawer(Context context, @NonNull Paint paint, @NonNull Indicator indicator) {
         super(paint, indicator);
 
-        strokePaint = new Paint();
-        strokePaint.setStyle(Paint.Style.STROKE);
-        strokePaint.setAntiAlias(true);
-        strokePaint.setStrokeWidth(indicator.getStroke());
     }
 
     public void draw(
+            Context context,
             @NonNull Canvas canvas,
             int position,
-            boolean isSelectedItem,
             int coordinateX,
             int coordinateY) {
 
-        float radius = indicator.getRadius();
-        int strokePx = indicator.getStroke();
-        float scaleFactor = indicator.getScaleFactor();
-
-        int selectedColor = indicator.getSelectedColor();
-        int unselectedColor = indicator.getUnselectedColor();
         int selectedPosition = indicator.getSelectedPosition();
         AnimationType animationType = indicator.getAnimationType();
+        boolean isPositionSelected = position == selectedPosition;
 
-		if (animationType == AnimationType.SCALE && !isSelectedItem) {
-			radius *= scaleFactor;
+        Drawable drawable = ContextCompat.getDrawable(
+                context,
+                isPositionSelected ? R.drawable.ic_selected : R.drawable.ic_unselected
+        );
 
-		} else if (animationType == AnimationType.SCALE_DOWN && isSelectedItem) {
-			radius *= scaleFactor;
-		}
-
-        int color = unselectedColor;
-        if (position == selectedPosition) {
-            color = selectedColor;
+        if (drawable != null) {
+            drawable.setBounds(
+                    coordinateX,
+                    coordinateY,
+                    coordinateX + drawable.getIntrinsicWidth(),
+                    coordinateY + drawable.getIntrinsicHeight()
+            );
+            drawable.draw(canvas);
         }
 
-        Paint paint;
-        if (animationType == AnimationType.FILL && position != selectedPosition) {
-            paint = strokePaint;
-            paint.setStrokeWidth(strokePx);
-        } else {
-            paint = this.paint;
-        }
-
-        paint.setColor(color);
-        canvas.drawCircle(coordinateX, coordinateY, radius, paint);
+//        canvas.drawCircle(coordinateX, coordinateY, radius, paint);
     }
 }

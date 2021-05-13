@@ -1,5 +1,7 @@
 package com.rd;
 
+import android.content.Context;
+
 import androidx.annotation.Nullable;
 import com.rd.animation.AnimationManager;
 import com.rd.animation.controller.ValueController;
@@ -17,9 +19,9 @@ public class IndicatorManager implements ValueController.UpdateListener {
         void onIndicatorUpdated();
     }
 
-    IndicatorManager(@Nullable Listener listener) {
+    IndicatorManager(Context context,@Nullable Listener listener) {
         this.listener = listener;
-        this.drawManager = new DrawManager();
+        this.drawManager = new DrawManager(context);
         this.animationManager = new AnimationManager(drawManager.indicator(), this);
     }
 
