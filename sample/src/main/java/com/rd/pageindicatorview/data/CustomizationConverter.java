@@ -7,16 +7,12 @@ public class CustomizationConverter {
 
     public static AnimationType getAnimationType(int position) {
         switch (position) {
-
             case 1:
                 return AnimationType.COLOR;
-
             case 2:
                 return AnimationType.SCALE;
-
-            case 8:
+            case 3:
                 return AnimationType.SWAP;
-
             default:
                 return AnimationType.NONE;
         }
@@ -24,12 +20,8 @@ public class CustomizationConverter {
 
     public static Orientation getOrientation(int position) {
         switch (position) {
-            case 0:
-                return Orientation.HORIZONTAL;
-
             case 1:
                 return Orientation.VERTICAL;
-
             default:
                 return Orientation.HORIZONTAL;
         }

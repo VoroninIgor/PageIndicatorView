@@ -18,9 +18,9 @@ public class ColorAnimation extends BaseAnimation<ValueAnimator> {
 
     static final String ANIMATION_COLOR_REVERSE = "ANIMATION_COLOR_REVERSE";
     static final String ANIMATION_COLOR = "ANIMATION_COLOR";
+    private final ColorAnimationValue value;
     int colorStart;
     int colorEnd;
-    private final ColorAnimationValue value;
 
     public ColorAnimation(@Nullable ValueController.UpdateListener listener) {
         super(listener);

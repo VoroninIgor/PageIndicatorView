@@ -15,11 +15,9 @@ public class SwapAnimation extends BaseAnimation<ValueAnimator> {
     private static final String ANIMATION_COORDINATE = "ANIMATION_COORDINATE";
     private static final String ANIMATION_COORDINATE_REVERSE = "ANIMATION_COORDINATE_REVERSE";
     private static final int COORDINATE_NONE = -1;
-
+    private final SwapAnimationValue value;
     private int coordinateStart = COORDINATE_NONE;
     private int coordinateEnd = COORDINATE_NONE;
-
-    private final SwapAnimationValue value;
 
     public SwapAnimation(@NonNull ValueController.UpdateListener listener) {
         super(listener);

@@ -37,9 +37,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     private static final Handler HANDLER = new Handler(Looper.getMainLooper());
 
     private IndicatorManager manager;
-    private DataSetObserver setObserver;
-    private ViewPager viewPager;
-    private boolean isInteractionEnabled;
     private final Runnable idleRunnable = new Runnable() {
         @Override
         public void run() {
@@ -47,6 +44,9 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
             hideWithAnimation();
         }
     };
+    private DataSetObserver setObserver;
+    private ViewPager viewPager;
+    private boolean isInteractionEnabled;
 
     public PageIndicatorView(Context context) {
         super(context);
@@ -295,27 +295,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
         }
 
         manager.indicator().setPadding((int) paddingPx);
-        invalidate();
-    }
-
-    /**
-     * Return stroke width in px if {@link AnimationType#FILL} is selected, 0 otherwise.
-     */
-    public int getStrokeWidth() {
-        return manager.indicator().getStroke();
-    }
-
-    public void setStrokeWidth(float strokePx) {
-        int radiusPx = manager.indicator().getRadius();
-
-        if (strokePx < 0) {
-            strokePx = 0;
-
-        } else if (strokePx > radiusPx) {
-            strokePx = radiusPx;
-        }
-
-        manager.indicator().setStroke((int) strokePx);
         invalidate();
     }
 
@@ -664,7 +643,6 @@ public class PageIndicatorView extends View implements ViewPager.OnPageChangeLis
     }
 
     private void onPageSelect(int position) {
-        Indicator indicator = manager.indicator();
         boolean canSelectIndicator = isViewMeasured();
 
         if (canSelectIndicator) {

@@ -9,10 +9,9 @@ import com.rd.animation.type.SwapAnimation;
 
 public class ValueController {
 
+    private final UpdateListener updateListener;
     private ColorAnimation colorAnimation;
     private SwapAnimation swapAnimation;
-
-    private final UpdateListener updateListener;
 
     public ValueController(@Nullable UpdateListener listener) {
         updateListener = listener;

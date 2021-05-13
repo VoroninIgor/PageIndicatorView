@@ -13,13 +13,7 @@
         <item>None</item>
         <item>Color</item>
         <item>Scale</item>
-        <item>Worm</item>
-        <item>Slide</item>
-        <item>Fill</item>
-        <item>Thin Worm</item>
-        <item>Drop</item>
         <item>Swap</item>
-        <item>Scale Down</item>
     </string-array>
 
     <string-array name="orientation">

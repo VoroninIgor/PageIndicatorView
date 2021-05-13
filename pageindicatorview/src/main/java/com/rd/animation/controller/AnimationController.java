@@ -11,10 +11,8 @@ public class AnimationController {
 
     private final ValueController valueController;
     private final ValueController.UpdateListener listener;
-
-    private BaseAnimation runningAnimation;
     private final Indicator indicator;
-
+    private BaseAnimation runningAnimation;
     private float progress;
     private boolean isInteractive;
 

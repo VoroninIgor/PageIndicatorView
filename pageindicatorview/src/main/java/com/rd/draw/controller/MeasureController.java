@@ -19,7 +19,6 @@ public class MeasureController {
 
         int count = indicator.getCount();
         int radius = indicator.getRadius();
-        int stroke = indicator.getStroke();
 
         int padding = indicator.getPadding();
         int paddingLeft = indicator.getPaddingLeft();
@@ -37,11 +36,11 @@ public class MeasureController {
         Orientation orientation = indicator.getOrientation();
         if (count != 0) {
             int diameterSum = circleDiameterPx * count;
-            int strokeSum = (stroke * 2) * count;
+
 
             int paddingSum = padding * (count - 1);
-            int w = diameterSum + strokeSum + paddingSum;
-            int h = circleDiameterPx + stroke;
+            int w = diameterSum + paddingSum;
+            int h = circleDiameterPx;
 
             if (orientation == Orientation.HORIZONTAL) {
                 desiredWidth = w;

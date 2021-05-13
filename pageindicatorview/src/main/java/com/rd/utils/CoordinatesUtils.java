@@ -79,7 +79,7 @@ public class CoordinatesUtils {
     private static int getFitPosition(@NonNull Indicator indicator, float lengthCoordinate, float heightCoordinate) {
         int count = indicator.getCount();
         int radius = indicator.getRadius();
-        int stroke = indicator.getStroke();
+
         int padding = indicator.getPadding();
 
         int height = indicator.getOrientation() == Orientation.HORIZONTAL ? indicator.getHeight() : indicator.getWidth();
@@ -89,7 +89,7 @@ public class CoordinatesUtils {
             int indicatorPadding = i > 0 ? padding : padding / 2;
             int startValue = length;
 
-            length += radius * 2 + (stroke / 2) + indicatorPadding;
+            length += radius * 2 + indicatorPadding;
             int endValue = length;
 
             boolean fitLength = lengthCoordinate >= startValue && lengthCoordinate <= endValue;
@@ -106,18 +106,17 @@ public class CoordinatesUtils {
     private static int getHorizontalCoordinate(@NonNull Indicator indicator, int position) {
         int count = indicator.getCount();
         int radius = indicator.getRadius();
-        int stroke = indicator.getStroke();
         int padding = indicator.getPadding();
 
         int coordinate = 0;
         for (int i = 0; i < count; i++) {
-            coordinate += radius + (stroke / 2);
+            coordinate += radius;
 
             if (position == i) {
                 return coordinate;
             }
 
-            coordinate += radius + padding + (stroke / 2);
+            coordinate += radius + padding;
         }
 
         return coordinate;

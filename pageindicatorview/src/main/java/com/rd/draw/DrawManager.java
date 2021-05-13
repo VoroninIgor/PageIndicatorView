@@ -17,10 +17,10 @@ import com.rd.draw.data.Indicator;
 
 public class DrawManager {
 
-    private Indicator indicator;
     private final DrawController drawController;
     private final MeasureController measureController;
     private final AttributeController attributeController;
+    private Indicator indicator;
 
     public DrawManager(Context context) {
         this.indicator = new Indicator();

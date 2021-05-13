@@ -56,7 +56,6 @@ public class AttributeController {
         indicator.setAutoVisibility(autoVisibility);
         indicator.setDynamicCount(dynamicCount);
         indicator.setCount(count);
-
         indicator.setSelectedPosition(position);
         indicator.setSelectingPosition(position);
         indicator.setLastSelectedPosition(position);
@@ -123,7 +122,7 @@ public class AttributeController {
                 return AnimationType.COLOR;
             case 2:
                 return AnimationType.SCALE;
-            case 8:
+            case 3:
                 return AnimationType.SWAP;
         }
 

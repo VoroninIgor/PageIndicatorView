@@ -17,12 +17,10 @@ public class Drawer {
     private final BasicDrawer basicDrawer;
     private final ColorDrawer colorDrawer;
     private final SwapDrawer swapDrawer;
-
+    private final Context context;
     private int position;
     private int coordinateX;
     private int coordinateY;
-
-    private final Context context;
 
     public Drawer(Context context, @NonNull Indicator indicator) {
         this.context = context;

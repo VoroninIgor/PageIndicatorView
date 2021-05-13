@@ -14,9 +14,9 @@ import com.rd.utils.CoordinatesUtils;
 
 public class DrawController {
 
-    private Value value;
     private final Drawer drawer;
     private final Indicator indicator;
+    private Value value;
     private ClickListener listener;
 
     public DrawController(Context context, @NonNull Indicator indicator) {

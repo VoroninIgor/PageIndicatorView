@@ -26,7 +26,6 @@ public class Indicator {
     private int paddingRight;
     private int paddingBottom;
 
-    private int stroke; //For "Fill" animation only
     private float scaleFactor; //For "Scale" animation only
 
     private int unselectedColor;
@@ -114,14 +113,6 @@ public class Indicator {
 
     public void setPaddingBottom(int paddingBottom) {
         this.paddingBottom = paddingBottom;
-    }
-
-    public int getStroke() {
-        return stroke;
-    }
-
-    public void setStroke(int stroke) {
-        this.stroke = stroke;
     }
 
     public float getScaleFactor() {
